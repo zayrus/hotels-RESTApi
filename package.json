@@ -27,14 +27,12 @@
   "devDependencies": {
     "should": "^7.1.0",
     "supertest": "^1.0.0",
-
     "babel-preset-es2015": "^6.18.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-uglify": "^2.0.0",
     "loadtest": "^2.2.1",
-    "nodemon": "^1.11.0",
-    "pm2": "latest"
+    "nodemon": "^1.11.0"
 
   },
   "scripts": {
@@ -44,6 +42,5 @@
     "mondebug": "nodemon index --exec 'npm run debug'",
     "lint": "eslint api",
     "lintdebug": "nodemon index --exec 'npm run lint && npm run debug'"
-
   }
 }

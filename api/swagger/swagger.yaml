@@ -64,28 +64,6 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/Response"  
-  /users/{id}:
-    get:
-      tags:
-        - users
-      x-swagger-router-controller: users.search
-      description: return detail of searched  user id 
-      operationId: getuser
-      parameters:
-        - name: id
-          in: path
-          description: id of user
-          required: true
-          type: string
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: "#/definitions/User"
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/Response"
   /hotels:
     post:
       x-swagger-router-controller: hotels.add
@@ -115,12 +93,6 @@ paths:
       x-swagger-router-controller: hotels.list
       description: return list of hotels
       operationId: gethotels
-      parameters:
-        - name: "authorization"
-          in: header
-          description: auth headers
-          required: false
-          type: string
       responses:
         "200":
           description: Success
@@ -159,6 +131,11 @@ paths:
       description: update info of specific hotel by id 
       operationId: puthotel
       parameters:
+        - name: "authorization"
+          in: header
+          description: auth headers
+          required: true
+          type: string
         - name: id
           in: path
           description: id of hotel
@@ -186,6 +163,11 @@ paths:
       description: remove hotel by id 
       operationId: delhotel
       parameters:
+        - name: "authorization"
+          in: header
+          description: auth headers
+          required: true
+          type: string
         - name: id
           in: path
           description: id of hotel

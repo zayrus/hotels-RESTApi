@@ -58,7 +58,6 @@ function makeControllers(main){
 
   return wrapControllers({
     'users.add_postuser': controllers.Users.add,
-    'users.search_getuser': controllers.Users.search,
     'users.find_postauth': controllers.Auth.login,
     'hotels.add_posthotel': controllers.Hotels.add,
     'hotels.list_gethotels': controllers.Hotels.list,
