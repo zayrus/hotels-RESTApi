@@ -1,18 +1,19 @@
 # hotels-RESTApi
 
-* Prerequisites
+## Prerequisites
 - [node && npm](https://nodejs.org/es/)
 - [mongodb](https://www.mongodb.com/download-center)
 
-* optional
-- eslint (npm i -g eslint)
+## Optional
+- eslint Run `npm i -g eslint`
 
-* Getting Started
-git clone
-cd hotels-RESTApi & npm i
-npm start
+## Getting Started
+Run `git clonei`
+Run `cd hotels-RESTApi & npm i`
+Run `npm start`
 
-* SEE API RUTES ---> http://localhost:10010/docs/
+## Use
+### API ROUTES ---> http://localhost:10010/docs/
 - /auth
 - /hotels
 - /users
