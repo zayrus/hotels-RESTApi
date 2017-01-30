@@ -1,0 +1,214 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: hotels-RESTApi
+# during dev, should point to your local machine
+host: localhost:10010
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /auth:
+    x-swagger-router-controller: users.find
+    post:
+      tags:
+        - auth
+      description: return user auth data
+      operationId: postauth
+      parameters:
+        - name: User
+          in: body
+          description: auth properties
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Response"
+        default:
+          description: fallback error
+          schema:
+            $ref: "#/definitions/Response"
+  /users:
+    post:
+      x-swagger-router-controller: users.add
+      tags:
+        - users
+      description: add new user
+      operationId: postuser
+      parameters:
+        - name: User
+          in: body
+          description: user properties
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Response"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/Response"  
+  /hotels:
+    post:
+      x-swagger-router-controller: hotels.add
+      tags:
+        - hotels
+      description: add hotel
+      operationId: posthotel
+      parameters:
+        - name: HotelRequest
+          in: body
+          description: hotel properties
+          required: true
+          schema:
+            $ref: "#/definitions/HotelRequest"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Response"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/Response"
+    get:
+      tags:
+        - hotels
+      x-swagger-router-controller: hotels.list
+      description: return list of hotels
+      operationId: gethotels
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/HotelRequest"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/Response"
+  /hotels/{id}:
+    get:
+      tags:
+        - hotels
+      x-swagger-router-controller: hotels.search
+      description: return detail of searched hotel by id 
+      operationId: gethotel
+      parameters:
+        - name: id
+          in: path
+          description: id of hotel
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/HotelRequest"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/Response"
+    put:
+      tags:
+        - hotels
+      x-swagger-router-controller: hotels.update
+      description: update info of specific hotel by id 
+      operationId: puthotel
+      parameters:
+        - name: "authorization"
+          in: header
+          description: auth headers
+          required: true
+          type: string
+        - name: id
+          in: path
+          description: id of hotel
+          required: true
+          type: string
+        - name: HotelRequest
+          in: body
+          description: hotel properties
+          required: false
+          schema:
+            $ref: "#/definitions/HotelRequest"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/HotelRequest"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/Response"
+    delete:
+      tags:
+        - hotels
+      x-swagger-router-controller: hotels.remove
+      description: remove hotel by id 
+      operationId: delhotel
+      parameters:
+        - name: "authorization"
+          in: header
+          description: auth headers
+          required: true
+          type: string
+        - name: id
+          in: path
+          description: id of hotel
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/HotelRequest"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/Response"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  HotelRequest:
+    type: object
+    properties:
+      name:
+        type: string
+      stars:
+        type: number
+      price:
+        type: number
+  User:
+    type: object
+    required:
+      - username
+      - password
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+  Response:
+    required:
+      - message
+    properties:
+      message:
+        type: string
+
