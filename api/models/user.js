@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 
 const validateEmail = username => {
-  let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+  let re = /^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/
   return re.test(username)
 }
 
@@ -16,7 +16,7 @@ var UserSchema = mongoose.Schema({
   },
   password: {
     type: String,
-    required: true 
+    required: true
   },
   role: String,
   active: Number
@@ -42,7 +42,7 @@ UserSchema.pre('save', function (next) {
     return next()
   }
 })
- 
+
 UserSchema.methods.comparePassword = function(passw, cb) {
   bcrypt.compare(passw, this.password, function (err, isMatch) {
     if (err) {

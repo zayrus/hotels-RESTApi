@@ -18,7 +18,7 @@ const database = require('../api/database')
  * Build Main aplication
  * @param {object} config
  * @return {Promise}
- */ 
+ */
 function app(config) {
   let self = this
   self.main = {
@@ -32,13 +32,13 @@ function app(config) {
       .then( () => { return self.libs() })
       .then( () => { return self.controllers() })
       .then( () => { return self.routers()  })
-      .then( () => { 
+      .then( () => {
         resolve(self.main)
       })
-    .catch( err => {
-      console.log('Error on init ', err)
-      reject(err)
-    })
+      .catch( err => {
+        console.log('Error on init ', err)
+        reject(err)
+      })
   })
 }
 
@@ -55,7 +55,7 @@ app.prototype.getApp = function() {
     resolve({app: self.main.app, server: self.main.server})
   })
 }
- 
+
 /**
  * inject swagger doc into main object.
  * @returns {Promise}
@@ -85,7 +85,7 @@ app.prototype.routers = function() {
     let options = {
       controllers: self.main.controllers
     }
-    
+
     app.use(cors())
     let formatValidationError = function formatValidationError(err, req, res, next) {
       let error = {
@@ -95,33 +95,33 @@ app.prototype.routers = function() {
       }
       res.json({error: error})
     }
-    
+
     function initMiddleWare(middleware, callback) {
       app.use((req, res, next) => {
         res.setHeader('Access-Control-Allow-Origin', '*')
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
         res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With')
         res.setHeader('Access-Control-Allow-Credentials', true)
-      
+
         if (req.method === 'OPTIONS') return res.end()
         next()
       })
-      
+
       app.use(middleware.swaggerMetadata())
       app.use(middleware.swaggerValidator(), formatValidationError)
-      app.use(passport.initialize()) 
+      app.use(passport.initialize())
       app.use(passport.session())
       require('../lib/auth')(passport)
-      
+
       app.use(middleware.swaggerRouter(options))
-      
+
       app.use((err, req, res, next) => {
         res.status(500)
         res.send(err)
         res.end()
       })
 
-      app.use(middleware.swaggerUi()) 
+      app.use(middleware.swaggerUi())
 
       callback()
     }
@@ -131,7 +131,7 @@ app.prototype.routers = function() {
       })
     })
   })
-}  
+}
 
 /**
  * Create the common lib instances for all REST Application
